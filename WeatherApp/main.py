@@ -10,7 +10,7 @@ days =st.slider("Forecast Days",min_value=1,max_value=5,help="Select the number 
 option = st.selectbox("Select data to view",("Tempreture","Sky"))
 st.subheader(f"{option} for the next {days} days in {place}")
 
-is_local = os.path.exists(r"C:\Users\naura\Desktop\Streamlit\WeatherApp\images")
+is_local = os.path.exists(r"C:\Users\naura\Desktop\Streamlit\WeatherApp")
 
 if is_local:
     images = {
@@ -26,8 +26,6 @@ else:
         "Rain": "https://github.com/gituser123290/WeatherApp/tree/main/WeatherApp/images/rain.jpg",
         "Snow": "https://github.com/gituser123290/WeatherApp/tree/main/WeatherApp/images/snow.jpg"
     }
-
-
 
 if place:
     try:
@@ -52,54 +50,3 @@ if place:
     except KeyError:
         st.write("That place does not exist.")
 
-
-# import os
-# import streamlit as st
-# import plotly.express as px
-# from backend import get_data
-
-# st.title("Weather forecast for Next days")
-
-# place = st.text_input("Place: ")
-# days = st.slider("Forecast Days", min_value=1, max_value=5, help="Select the number of forecast days")
-# option = st.selectbox("Select data to view", ("Temperature", "Sky"))
-
-# st.subheader(f"{option} for the next {days} days in {place}")
-
-# is_local = os.path.exists(r"C:\Users\naura\Desktop\Streamlit\WeatherApp\images")
-
-# if is_local:
-#     images = {
-#         "Clear": "images/clear.jpg",
-#         "Clouds": "images/cloud.jpg",
-#         "Rain": "images/rain.jpg",
-#         "Snow": "images/snow.jpg"
-#     }
-# else:
-#     images = {
-#         "Clear": "https://github.com/gituser123290/WeatherApp/tree/main/WeatherApp/images/clear.jpg",
-#         "Clouds": "https://github.com/gituser123290/WeatherApp/tree/main/WeatherApp/images/cloud.jpg",
-#         "Rain": "https://github.com/gituser123290/WeatherApp/tree/main/WeatherApp/images/rain.jpg",
-#         "Snow": "https://github.com/gituser123290/WeatherApp/tree/main/WeatherApp/images/snow.jpg"
-#     }
-
-# if place:
-#     try:
-#         filtered_data = get_data(place, days) 
-        
-#         if option == "Temperature":
-#             temperatures = [dict["main"]['temp'] / 10 for dict in filtered_data] 
-#             dates = [dict["dt_txt"] for dict in filtered_data]
-            
-#             figure = px.line(x=dates, y=temperatures, labels={"x": "Date", "y": "Temperature (°C)"})
-#             st.plotly_chart(figure)
-        
-#         if option == "Sky":
-#             sky_conditions = [dict["weather"][0]["main"] for dict in filtered_data]
-            
-#             image_paths = [images.get(condition, "images/default.jpg") for condition in sky_conditions]
-            
-#             st.image(image_paths, width=150)
-    
-#     except KeyError:
-#         st.write("That place does not exist.")
