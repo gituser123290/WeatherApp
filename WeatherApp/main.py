@@ -10,7 +10,7 @@ days =st.slider("Forecast Days",min_value=1,max_value=5,help="Select the number 
 option = st.selectbox("Select data to view",("Tempreture","Sky"))
 st.subheader(f"{option} for the next {days} days in {place}")
 
-is_local = os.path.exists(r"C:\Users\naura\Desktop\Streamlit\WeatherApp")
+is_local = os.path.exists(r"C:\Users\naura\Desktop\Streamlit\WeatherApp\images")
 
 if is_local:
     images = {
