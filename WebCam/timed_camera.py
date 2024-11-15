@@ -1,4 +1,6 @@
+import os
 import threading
+import time
 from PIL import Image
 import cv2
 import smtplib
@@ -9,6 +11,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 import io
 
+
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '1'
 
 emotion_detector = FER()
 
@@ -90,18 +95,26 @@ if start:
 
         emotions, score = emotion_detector.top_emotion(frame)
         
-        cv2.putText(frame, date_text, (30, 80), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 2, cv2.LINE_AA)
-        cv2.putText(frame, time_text, (30, 140), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2, cv2.LINE_AA)
-        
         if emotions is not None:
             emotion_text = f"Emotion: {emotions}"
             cv2.putText(frame, emotion_text, (30, 200), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2, cv2.LINE_AA)
+        
+        cv2.putText(frame, date_text, (30, 80), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 2, cv2.LINE_AA)
+        cv2.putText(frame, time_text, (30, 140), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2, cv2.LINE_AA)
+        
 
         st_image.image(frame)
 
         prev_frame = frame
+        
+        key=cv2.waitKey(1)
 
         if stop:
+            camera_active = False
+            st.stop()
+    
+        key = cv2.waitKey(1)  
+        if key == ord('q'):  
             camera_active = False
             st.stop()
 
